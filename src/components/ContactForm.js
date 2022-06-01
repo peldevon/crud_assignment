@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
 
-const Registrationform = (props) => {
+const ContactForm = (props) => {
     const initialFieldValues = {
-            firstName: '',
-            middleName: '',
-            lastName: '',
-            studentNumber: '',
-            department:'',
-            phoneNumber:'',
-            email:''
-    }
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        studentNumber: '',
+        department:'',
+        phoneNumber:'',
+        email:''
+}
 
     var [values, setValues] = useState(initialFieldValues)
 
     useEffect(() => {
-        if (props.currentId == '')
+        if (props.currentId === '')
             setValues({
                 ...initialFieldValues
             })
         else
             setValues({
-                ...props.registrationObjects[props.currentId]
+                ...props.contactObjects[props.currentId]
             })
-    }, [props.currentId, props.registrationObjects])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.currentId, props.contactObjects])
 
     const handleInputChange = e => {
         var { name, value } = e.target
@@ -63,7 +64,7 @@ const Registrationform = (props) => {
             <div className= "form-group input-group" >
               <div className="input-group-prepend" >
                   <div className="input-group-text">
-                  <i class="fa fa-address-card" aria-hidden="true"></i>
+                  <i className="fa fa-address-card" aria-hidden="true"></i>
                   </div>
               </div>
               <input className="form-control" placeholder="Student Number" name="studentNumber" 
@@ -78,7 +79,7 @@ const Registrationform = (props) => {
              <div className= "form-group input-group" >
                <div className="input-group-prepend" >
                   <div className="input-group-text">
-                  <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                  <i className="fa fa-graduation-cap" aria-hidden="true"></i>
                   </div>
                </div>
               <input className="form-control" placeholder="Department" name="department" 
@@ -93,7 +94,7 @@ const Registrationform = (props) => {
              <div className= "form-group input-group col-md-6" >
                <div className="input-group-prepend" >
                   <div className="input-group-text">
-                  <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                  <i className="fas fa-mobile-alt" aria-hidden="true"></i>
                   </div>
                </div>
               <input className="form-control" placeholder="Mobile Number" name="phoneNumber" 
@@ -106,7 +107,7 @@ const Registrationform = (props) => {
              <div className= "form-group input-group col-md-6" >
                <div className="input-group-prepend" >
                   <div className="input-group-text">
-                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <i className="fa fa-envelope" aria-hidden="true"></i>
                   </div>
                </div>
               <input className="form-control" placeholder="studentid@emu.edu.tr" name="email" 
@@ -116,10 +117,10 @@ const Registrationform = (props) => {
              
           </div>
             <div className="form-group">
-                <input type="submit" value={props.currentId == '' ? "Save" : "Update"} className="btn btn-primary btn-block" />
+                <input type="submit" value={props.currentId === '' ? "Save" : "Update"} className="btn btn-primary btn-block" />
             </div>
         </form >
     );
 }
 
-export default Registrationform;
+export default ContactForm;

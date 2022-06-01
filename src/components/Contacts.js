@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
-import Registrationform from "./Registrationform";
+import ContactForm from "./ContactForm"
 import firebaseDb from "../firebase";
 
-const  Registration = () => {
+const Contacts = () => {
 
-    var [registrationObjects, setRegistrationObjects] = useState({})
+    var [contactObjects, setContactObjects] = useState({})
     var [currentId, setCurrentId] = useState('')
 
     useEffect(() => {
-        firebaseDb.child('registration').on('value', snapshot => {
+        firebaseDb.child('contacts').on('value', snapshot => {
             if (snapshot.val() != null)
-            setRegistrationObjects({
+                setContactObjects({
                     ...snapshot.val()
                 })
             else
-            setRegistrationObjects({})
+                setContactObjects({})
 
         })
     }, [])// similar to componentDidMount
 
     const addOrEdit = obj => {
-        if (currentId == '')
-            firebaseDb.child('registration').push(
+        if (currentId === '')
+            firebaseDb.child('contacts').push(
                 obj,
                 err => {
                     if (err)
@@ -31,7 +31,7 @@ const  Registration = () => {
                 }
             )
         else
-            firebaseDb.child(`registration/${currentId}`).set(
+            firebaseDb.child(`contacts/${currentId}`).set(
                 obj,
                 err => {
                     if (err)
@@ -44,8 +44,7 @@ const  Registration = () => {
 
     const onDelete = key => {
         if (window.confirm('Are you sure to delete this record?')) {
-            debugger
-            firebaseDb.child(`registration/${key}`).remove(
+            firebaseDb.child(`contacts/${key}`).remove(
                 err => {
                     if (err)
                         console.log(err)
@@ -55,18 +54,19 @@ const  Registration = () => {
             )
         }
     }
-    return ( 
+
+    return (
         <>
-        <div className="jumbotron jumbotron-fluid">
-            <div className="container">
-                <h1 className="display-4 text-center">Student Enrollment</h1>
+            <div className="jumbotron jumbotron-fluid">
+                <div className="container">
+                    <h1 className="display-4 text-center">Register Student</h1>
+                </div>
             </div>
-        </div>
-        <div className="row">
-            <div className="col-md-5">
-                <Registrationform {...({ addOrEdit, currentId, registrationObjects })} />
-            </div>
-            <div className="col-md-7">
+            <div className="row">
+                <div className="col-md-5">
+                    <ContactForm {...({ addOrEdit, currentId, contactObjects })} />
+                </div>
+                <div className="col-md-7">
                 <table className="table table-borderless table-stripped">
                     <thead className="thead-light">
                         <tr>
@@ -82,15 +82,15 @@ const  Registration = () => {
                     </thead>
                     <tbody>
                         {
-                            Object.keys(registrationObjects).map(id => {
+                            Object.keys(contactObjects).map(id => {
                                 return <tr key={id}>
-                                    <td>{registrationObjects[id].firstName}</td>
-                                    <td>{registrationObjects[id].middleName}</td>
-                                    <td>{registrationObjects[id].lastName}</td>
-                                    <td>{registrationObjects[id].studentNumber}</td>
-                                    <td>{registrationObjects[id].department}</td>
-                                    <td>{registrationObjects[id].phoneNumber}</td>
-                                    <td>{registrationObjects[id].email}</td>
+                                    <td>{contactObjects[id].firstName}</td>
+                                    <td>{contactObjects[id].middleName}</td>
+                                    <td>{contactObjects[id].lastName}</td>
+                                    <td>{contactObjects[id].studentNumber}</td>
+                                    <td>{contactObjects[id].department}</td>
+                                    <td>{contactObjects[id].phoneNumber}</td>
+                                    <td>{contactObjects[id].email}</td>
                                     <td>
                                         <a className="btn text-primary" onClick={() => { setCurrentId(id) }}>
                                             <i className="fas fa-pencil-alt"></i>
@@ -106,9 +106,9 @@ const  Registration = () => {
                 </table>
 
             </div>
-        </div>
-    </>
-     );
+            </div>
+        </>
+    );
 }
- 
-export default Registration;
+
+export default Contacts;

@@ -1,6 +1,6 @@
-import * as firebase from "firebase/app";
+import * as firebase from "firebase";
 
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyB-bCenj6SaRtT9RllUA82CQ6s07yu3FR0",
   authDomain: "cmse514-crud-operation.firebaseapp.com",
   databaseURL: "https://cmse514-crud-operation-default-rtdb.firebaseio.com",
@@ -9,7 +9,8 @@ const firebaseConfig = {
   messagingSenderId: "686336792847",
   appId: "1:686336792847:web:ccccf1000adfe365dd867a"
 };
+  
+  // Initialize Firebase
+  var fireDb = firebase.initializeApp(firebaseConfig);
 
-// Initialize Firebase
-const fireDb = firebase.initializeApp(firebaseConfig);
-export default fireDb.database().ref();
+  export default fireDb.database().ref();
